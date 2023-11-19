@@ -1,41 +1,47 @@
 import React, { useState }  from "react";
 
 const Home = () => {
-	const [inputValue, setInputValue] = useState("");
-	const [todos, setTodos] = useState ([]);
+	const [task, setTask] = useState("");
+	const [tasks, setTasks] = useState ([]);
 
+const addTask = () => {
+		setTasks([...tasks, task]);
+		setTask('');
+	  }
+	 
 	return (
-		<div className="center">
-			<h1>TODOS</h1>
-			<ul>
-				<li>
-					<input
-						type="text"
-						onChange={(e) => setInputValue(e.target.value)}
-						value={inputValue}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") {
-								setTodos(todos.concat([inputValue]))
-							}
-						}}
-						placeholder="Things you need to do!"></input>
-				</li>
-				{todos.map((item, index) => (
+		<div className="container">
+			<h1>MY TO-DOS</h1>
+				<ul>
+					<li>
+						<input
+							type="text"
+							onChange={(e) => setTask(e.target.value)}
+							value={task}
+							onKeyDown={(e) => {
+								if(e.key === 'Enter'){
+									addTask();
+								  }
+							}}
+							placeholder="Add a new thing to do!"></input>
+					</li>
+					<button onClick={addTask}>Add Task!</button>
+				{tasks.map((task, index) => (
 					<li>	
-						{item}{" "}
+						{task}{" "}
 						<i
 							class="fas fa-trash-alt"
 							onClick={() =>
-								setTodos(
-									todos.filter(
-										(t, currentIndex) =>
+								setTasks(
+									tasks.filter(
+										(task, currentIndex) =>
 										index != currentIndex
 									)
 							)}></i>
 					</li>
 				))}
 			</ul>
-			<div>{todos.length} tasks</div>
+			<div className="tasks">{tasks.length} tasks</div>
 		</div>
 	)
 }
